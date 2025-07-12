@@ -9,7 +9,7 @@ macropad = MacroPad()
 
 main_group = displayio.Group()
 main_group.scale = 2
-macropad.display.show(main_group)
+macropad.display.root_group = main_group
 score_label = label.Label(
     y=4,
     font=terminalio.FONT,
@@ -83,7 +83,7 @@ while True:
         update_speed()
 
     if lives <= 0:
-        macropad.display.show(game_over)
+        macropad.display.root_group = game_over
         macropad.stop_tone()
         time.sleep(.5)
         macropad.play_tone(466, .5)
@@ -96,12 +96,12 @@ while True:
         update_score()
         update_lives()
         macropad.pixels.fill((0, 0, 0))
-        macropad.display.show(press_to_start)
+        macropad.display.root_group = press_to_start
 
         while not macropad.encoder_switch:
             time.sleep(.1)
         
-        macropad.display.show(main_group)
+        macropad.display.root_group = main_group
 
     while True:
         event = macropad.keys.events.get()
